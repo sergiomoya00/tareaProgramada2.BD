@@ -5,6 +5,9 @@
  */
 package tareaprogramada1.bases.gui;
 
+import Connections.metodossql;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author samoy
@@ -17,7 +20,7 @@ public class EntryStudent extends javax.swing.JFrame {
     public EntryStudent() {
         initComponents();
     }
-
+   metodossql metodos=new metodossql();
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,23 +30,24 @@ public class EntryStudent extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
+        txtcorreo = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtcontra = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        labelnombr = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Número de carnet:");
+        jLabel1.setText("Correo Electronico");
 
         jLabel2.setText("Contraseña:");
 
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+        txtcontra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
+                txtcontraActionPerformed(evt);
             }
         });
 
@@ -63,6 +67,8 @@ public class EntryStudent extends javax.swing.JFrame {
             }
         });
 
+        labelnombr.setText("jLabel4");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -78,31 +84,38 @@ public class EntryStudent extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1)
-                            .addComponent(jTextField1)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)))
+                            .addComponent(txtcorreo)
+                            .addComponent(txtcontra, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(164, 164, 164)
                         .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton2)))
+                        .addComponent(jButton2)
+                        .addGap(46, 46, 46)
+                        .addComponent(labelnombr)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton2)
-                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(labelnombr)))
+                .addGap(11, 11, 11)
                 .addComponent(jLabel3)
                 .addGap(33, 33, 33)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtcorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtcontra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jButton1)
                 .addContainerGap(30, Short.MAX_VALUE))
@@ -111,14 +124,31 @@ public class EntryStudent extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+    private void txtcontraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcontraActionPerformed
 
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
+    }//GEN-LAST:event_txtcontraActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ConsultStudentGrades grades = new ConsultStudentGrades();
-        grades.setVisible(true);
-        this.setVisible(false);         // TODO add your handling code here:
+      String busqueda_contraseña=metodos.buscarContraseñaRegistradaEstudiante(txtcorreo.getText());
+      String busqueda_correo=metodos.buscarCorreoRegistradoEstudiante(txtcorreo.getText());
+      String busqueda_nombre=metodos.buscarNombreEstudiante(txtcorreo.getText());
+      System.out.print(busqueda_contraseña);
+      if(busqueda_correo.equals("usuario encontrado")){
+          System.out.print(busqueda_correo);
+          if(busqueda_contraseña.equals(txtcontra.getText())){
+       JOptionPane.showMessageDialog(null, "Bienvenid@"+busqueda_nombre);
+       ConsultStudentGrades p=new ConsultStudentGrades();
+       //p.labelnombr.setText(busqueda_nombre);
+       p.setVisible(true);
+       this.setVisible(false);
+       }
+          else{
+           JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+          }
+      }
+      else{
+           JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+          }       // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -168,7 +198,8 @@ public class EntryStudent extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel labelnombr;
+    private javax.swing.JPasswordField txtcontra;
+    private javax.swing.JTextField txtcorreo;
     // End of variables declaration//GEN-END:variables
 }

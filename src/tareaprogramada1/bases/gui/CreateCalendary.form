@@ -42,11 +42,11 @@
                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jButton3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" min="-2" pref="687" max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" min="-2" pref="779" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="41" max="32767" attributes="0"/>
+              <EmptySpace pref="62" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -81,15 +81,15 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable2">
+        <Component class="javax.swing.JTable" name="table">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="5" rowCount="4">
                 <Column editable="true" title="Asignaci&#xf3;n" type="java.lang.String"/>
-                <Column editable="true" title="Valor porcentual" type="java.lang.Float"/>
-                <Column editable="true" title="Fecha de entrega" type="java.lang.String"/>
+                <Column editable="true" title="Responsable de evaluar" type="java.lang.Float"/>
                 <Column editable="true" title="Detalle" type="java.lang.String"/>
-                <Column editable="true" title="Responsable de evaluar" type="java.lang.String"/>
+                <Column editable="true" title="Fecha de entrega" type="java.lang.String"/>
+                <Column editable="true" title="Valor Porcentual" type="java.lang.String"/>
               </Table>
             </Property>
           </Properties>
@@ -116,6 +116,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Agregar asignaci&#xf3;n"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

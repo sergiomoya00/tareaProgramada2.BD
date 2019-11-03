@@ -7,6 +7,7 @@
 package tareaprogramada1.bases.gui;
 
 import Connections.Conexion;
+import Connections.EmailNotification;
 import Connections.metodossql;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,8 +24,10 @@ public class Encargadologin extends javax.swing.JFrame {
     /** Creates new form Encargadologin */
     public Encargadologin() {
         initComponents();
+        
     }
     metodossql metodos=new metodossql();
+   
     
     /** This method is called from within the constructor to
      * initialize the form.

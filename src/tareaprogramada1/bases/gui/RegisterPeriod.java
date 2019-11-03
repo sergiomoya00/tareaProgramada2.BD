@@ -5,6 +5,7 @@
  */
 package tareaprogramada1.bases.gui;
 import Connections.Conexion;
+import Connections.intValidation;
 import java.sql.*;
 import javax.swing.JOptionPane;
 /**
@@ -15,6 +16,7 @@ public class RegisterPeriod extends javax.swing.JFrame {
  Conexion conexion=new Conexion();
  Connection cin= conexion.getConnection();
  PreparedStatement ps;
+ intValidation val=new intValidation();
  
     /**
      * Creates new form RegisterPeriod
@@ -23,6 +25,7 @@ public class RegisterPeriod extends javax.swing.JFrame {
         initComponents();
     }
      void Register(){
+    if(val.isNumeric(txtaño.getText())==true && Integer.parseInt(txtaño.getText())<2050&&Integer.parseInt(txtaño.getText())>1950){
    String insertar="insert into periodoPractica (año,numeroSemestre) values (?,?) ";
    int a=Integer.parseInt(txtaño.getText());
    int b=Integer.parseInt(combo.getSelectedItem().toString());
@@ -43,7 +46,16 @@ public class RegisterPeriod extends javax.swing.JFrame {
    }catch(Exception e){
    
    }
+   SupervisorFunctions papo = new SupervisorFunctions();
+        papo.setVisible(true);
+        this.setVisible(false); 
    }
+    else{
+   JOptionPane.showMessageDialog(null,"Datos ingresados incorrectos: Revisar los tipos o el año, rango(1950-2050) ");
+   
+   }
+     
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,7 +72,6 @@ public class RegisterPeriod extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtaño = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        txt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,15 +112,12 @@ public class RegisterPeriod extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2)
                             .addComponent(combo, 0, 319, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtaño)
-                                .addGap(76, 76, 76)))))
+                            .addComponent(txtaño))))
                 .addContainerGap(45, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(150, 150, 150))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,11 +132,9 @@ public class RegisterPeriod extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtaño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addContainerGap())
         );
 
         pack();
@@ -186,7 +192,6 @@ Register();
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField txt;
     private javax.swing.JTextField txtaño;
     // End of variables declaration//GEN-END:variables
 }

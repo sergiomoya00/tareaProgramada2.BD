@@ -5,6 +5,9 @@
  */
 package tareaprogramada1.bases.gui;
 
+import Connections.metodossql;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author samoy
@@ -17,7 +20,7 @@ public class EntryProfessor extends javax.swing.JFrame {
     public EntryProfessor() {
         initComponents();
     }
-
+    metodossql metodos=new metodossql();
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,9 +31,9 @@ public class EntryProfessor extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtcorreo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtcontra = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
@@ -70,9 +73,9 @@ public class EntryProfessor extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(64, 64, 64)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+                            .addComponent(txtcontra, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField1)
+                            .addComponent(txtcorreo)
                             .addComponent(jLabel1)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
@@ -92,11 +95,11 @@ public class EntryProfessor extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtcorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtcontra, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(jButton1)
                 .addContainerGap(33, Short.MAX_VALUE))
@@ -106,9 +109,26 @@ public class EntryProfessor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ProfessorElection profe = new ProfessorElection();
-        profe.setVisible(true);
-        this.setVisible(false);        // TODO add your handling code here:
+     String busqueda_contraseña=metodos.buscarContraseñaRegistradaProfesor(txtcorreo.getText());
+      String busqueda_correo=metodos.buscarCorreoRegistradoProfesor(txtcorreo.getText());
+      String busqueda_nombre=metodos.buscarNombreProfesor(txtcorreo.getText()); 
+      System.out.print(busqueda_contraseña);
+      if(busqueda_correo.equals("usuario encontrado")){
+          System.out.print(busqueda_correo);
+          if(busqueda_contraseña.equals(txtcontra.getText())){
+       JOptionPane.showMessageDialog(null, "Bienvenid@"+busqueda_nombre);
+       ProfessorElection p=new ProfessorElection();
+       p.txtnombr.setText(busqueda_nombre);
+       p.setVisible(true);
+       this.setVisible(false);
+       }
+          else{
+           JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+          }
+      }
+      else{
+           JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+          }       // TODO add your handling code here:               // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -158,7 +178,7 @@ public class EntryProfessor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField txtcontra;
+    private javax.swing.JTextField txtcorreo;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,44 +4,77 @@
  * and open the template in the editor.
  */
 package tareaprogramada1.bases.gui;
-
+  
 import Connections.Conexion;
+import Connections.intValidation;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
+ 
 public class RegisterProfessor extends javax.swing.JFrame {
-
-    Conexion conexion = new Conexion();
-    Connection cin = conexion.getConnection();
-    PreparedStatement ps;
-
+ Conexion conexion=new Conexion();
+ Connection cin= conexion.getConnection();
+ PreparedStatement ps;
+ intValidation val=new intValidation();
+ 
     public RegisterProfessor() {
         initComponents();
     }
 
-    void Register() {
-        String insertar = "insert into profesor (idProfesor,primerNombre,segundoNombre,primerApellido,segundoApellido,telefono,correoElectronico) values (?,?,?,?,?,?,?) ";
-        try {
-            ps = cin.prepareCall(insertar);
-            ps.setString(1, txtid.getText());
-            ps.setString(2, txtprimernombre.getText());
-            ps.setString(3, txtsegundonombre.getText());
-            ps.setString(4, txtprimerapellido.getText());
-            ps.setString(5, txtsegundoapellido.getText());
-            ps.setString(6, txttelefono.getText());
-            ps.setString(7, txtcorreo.getText());
-
-            int registro = ps.executeUpdate();
-            if (registro > 0) {
-                JOptionPane.showMessageDialog(this, "Usuario registrado con exito", "Bien", JOptionPane.QUESTION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "Usuario no registrado con exito", "atencion", JOptionPane.ERROR_MESSAGE);
-            }
-
-        } catch (Exception e) {
-
-        }
-    }
+   void Register(){
+   if(val.isNumeric(txtid.getText())==true && val.isNumeric(txttelefono.getText())==true){
+   String insertar="insert into profesor (idProfesor,primerNombre,segundoNombre,primerApellido,segundoApellido,telefono,correoElectronico) values (?,?,?,?,?,?,?) ";
+   try{
+   ps=cin.prepareCall(insertar);
+   ps.setString(1, txtid.getText());
+   ps.setString(2, txtprimernombre.getText());
+   ps.setString(3, txtsegundonombre.getText());
+   ps.setString(4, txtprimerapellido.getText());
+   ps.setString(5, txtsegundoapellido.getText());
+   ps.setString(6, txttelefono.getText());
+   ps.setString(7, txtcorreo.getText());
+   
+   int registro= ps.executeUpdate();
+   if(registro>0){
+   JOptionPane.showMessageDialog(this,"Usuario registrado con exito","Bien",JOptionPane.QUESTION_MESSAGE);
+   }
+   else{
+   JOptionPane.showMessageDialog(this,"Usuario no registrado con exito","atencion",JOptionPane.ERROR_MESSAGE);
+   }
+   
+   }catch(Exception e){
+   
+   }}
+   else{
+   JOptionPane.showMessageDialog(null,"Datos ingresados incorrectos: Revisar los tipos");
+   
+   }
+   }
+   void Registerusuario(){
+   if(val.isNumeric(txtid.getText())==true && val.isNumeric(txttelefono.getText())==true){
+   String insertar="insert into usuarioprofesor (correoElectronico,contraseña) values (?,?) ";
+   try{
+   ps=cin.prepareCall(insertar);
+   ps.setString(1, txtcorreo.getText());
+   ps.setString(2, txtcontra.getText());
+  
+   
+   int registro= ps.executeUpdate();
+   if(registro>0){
+   JOptionPane.showMessageDialog(this,"Usuario registrado con exito","Bien",JOptionPane.QUESTION_MESSAGE);
+   }
+   else{
+   JOptionPane.showMessageDialog(this,"Usuario no registrado con exito","atencion",JOptionPane.ERROR_MESSAGE);
+   }
+   
+   }catch(Exception e){
+   
+   }
+   SupervisorFunctions papo = new SupervisorFunctions();
+    papo.setVisible(true);
+    this.setVisible(false); 
+   }
+   }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -64,8 +97,8 @@ public class RegisterProfessor extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         txtid = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        txtcontra = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,18 +154,14 @@ public class RegisterProfessor extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setText("Id");
+        jLabel8.setText("Cedula");
 
-        jLabel9.setText("Período de práctica");
+        jLabel10.setText("Contraseña");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 207, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(197, 197, 197))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -143,6 +172,7 @@ public class RegisterProfessor extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel10)
                             .addComponent(jLabel6)
                             .addComponent(jLabel5)
                             .addComponent(jLabel4)
@@ -157,9 +187,11 @@ public class RegisterProfessor extends javax.swing.JFrame {
                             .addComponent(txtcorreo)
                             .addComponent(txtid)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtcontra)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(193, 193, 193)
+                        .addComponent(jButton1)))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,12 +229,12 @@ public class RegisterProfessor extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtcorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
-                .addGap(8, 8, 8)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtcontra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addComponent(jButton1)
-                .addGap(26, 26, 26))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -221,7 +253,10 @@ public class RegisterProfessor extends javax.swing.JFrame {
     }//GEN-LAST:event_txttelefonoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Register();               // TODO add your handling code here:
+   Register();
+   Registerusuario();
+   
+   // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -272,8 +307,8 @@ public class RegisterProfessor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -281,7 +316,7 @@ public class RegisterProfessor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPasswordField txtcontra;
     private javax.swing.JTextField txtcorreo;
     private javax.swing.JTextField txtid;
     private javax.swing.JTextField txtprimerapellido;

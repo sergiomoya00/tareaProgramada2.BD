@@ -5,6 +5,14 @@
  */
 package tareaprogramada1.bases.gui;
 
+import Connections.Conexion;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author samoy
@@ -16,6 +24,37 @@ public class CreateCalendary extends javax.swing.JFrame {
      */
     public CreateCalendary() {
         initComponents();
+        try{
+        DefaultTableModel modelo= new DefaultTableModel();
+        table.setModel(modelo);
+        PreparedStatement ps=null;
+        ResultSet rs=null;
+        Conexion conn=new Conexion();
+        Connection con=conn.getConnection();
+        
+        String sql="SELECT idCalendario,idResponsable,detalle,fechaEntregable,valorPorcentual from calendarioevaluacion ";
+        
+        ps=con.prepareStatement(sql);
+        rs=ps.executeQuery();
+        
+        ResultSetMetaData rsMd=rs.getMetaData();
+        int cantidadColumnas=rsMd.getColumnCount();
+        modelo.addColumn("Asignacion");
+        modelo.addColumn("Responsable");
+        modelo.addColumn("Detalle");
+        modelo.addColumn("Fecha de entrega");
+        modelo.addColumn("Valor Porcentual");
+        while(rs.next()){
+        Object[] filas=new Object[cantidadColumnas];
+        for(int i=0;i<cantidadColumnas;i++){
+        filas[i]=rs.getObject(i+1);
+        }
+        modelo.addRow(filas);
+        }}
+        catch(SQLException ex){
+        
+        }
+        
     }
 
     /**
@@ -29,7 +68,7 @@ public class CreateCalendary extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -38,7 +77,7 @@ public class CreateCalendary extends javax.swing.JFrame {
 
         jLabel1.setText("Crear calendario de evaluaciones");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -46,7 +85,7 @@ public class CreateCalendary extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Asignación", "Valor porcentual", "Fecha de entrega", "Detalle", "Responsable de evaluar"
+                "Asignación", "Responsable de evaluar", "Detalle", "Fecha de entrega", "Valor Porcentual"
             }
         ) {
             Class[] types = new Class [] {
@@ -57,7 +96,7 @@ public class CreateCalendary extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(table);
 
         jButton1.setText("Crear");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -74,6 +113,11 @@ public class CreateCalendary extends javax.swing.JFrame {
         });
 
         jButton3.setText("Agregar asignación");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,8 +139,8 @@ public class CreateCalendary extends javax.swing.JFrame {
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton3)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 687, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(41, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 779, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,6 +172,12 @@ public class CreateCalendary extends javax.swing.JFrame {
         papo.setVisible(true);
         this.setVisible(false);         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        InsertCalendary papo = new InsertCalendary();
+        papo.setVisible(true);
+        this.setVisible(false);       // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,6 +220,6 @@ public class CreateCalendary extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

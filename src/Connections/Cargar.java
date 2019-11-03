@@ -88,8 +88,8 @@ public class Cargar {
             ResultSet result = pst.executeQuery();
             combo.addItem("Evaluación");
             while (result.next()) {
-                combo.addItem("Número de semestre: " + result.getString("numeroSemestre") + 
-                        " - " + result.getString("año"));
+                combo.addItem("Número de semestre: " + result.getString("numeroSemestre")
+                        + " - " + result.getString("año"));
             }
 
         } catch (Exception e) {
@@ -104,7 +104,7 @@ public class Cargar {
         }
     }
 
-        public void CargarEstudiantes2(JComboBox combo) {
+    public void CargarEstudiantes2(JComboBox combo) {
         java.sql.Connection conectar = null;
         String SSQL = "SELECT primerNombre, segundoNombre, primerApellido, segundoApellido FROM practicante ";
         try {
@@ -129,7 +129,7 @@ public class Cargar {
             }
         }
     }
-    
+
     public void CargarEstudiantes(JComboBox combo) {
         java.sql.Connection conectar = null;
         String SSQL = "SELECT primerNombre, segundoNombre, primerApellido, segundoApellido,idPracticante FROM practicante ORDER BY idPracticante ASC ";
@@ -207,4 +207,118 @@ public class Cargar {
         return fileContent;
     }
 
+    public void CargarPracticante(JComboBox combo) {
+        java.sql.Connection conectar = null;
+        String SSQL = "SELECT idPracticante FROM practicante ORDER BY idPracticante ASC ";
+        try {
+            conectar = p.getConnection();
+            PreparedStatement pst = conectar.prepareCall(SSQL);
+            ResultSet result = pst.executeQuery();
+            while (result.next()) {
+                combo.addItem(result.getString("idpracticante"));
+            }
+
+        } catch (Exception e) {
+
+        } finally {
+            if (conectar != null) {
+                try {
+                    conectar.close();
+                } catch (SQLException ex) {
+                }
+            }
+        }
+    }
+
+    public void CargarProfesor(JComboBox combo) {
+        java.sql.Connection conectar = null;
+        String SSQL = "SELECT idProfesor FROM profesor ORDER BY idProfesor ASC ";
+        try {
+            conectar = p.getConnection();
+            PreparedStatement pst = conectar.prepareCall(SSQL);
+            ResultSet result = pst.executeQuery();
+            while (result.next()) {
+                combo.addItem(result.getString("idProfesor"));
+            }
+
+        } catch (Exception e) {
+            System.out.print("error");
+        } finally {
+            if (conectar != null) {
+                try {
+                    conectar.close();
+                } catch (SQLException ex) {
+                }
+            }
+        }
+    }
+
+    public void CargarAnno(JComboBox combo) {
+        java.sql.Connection conectar = null;
+        String SSQL = "SELECT año FROM periodopractica ORDER BY año ASC ";
+        try {
+            conectar = p.getConnection();
+            PreparedStatement pst = conectar.prepareCall(SSQL);
+            ResultSet result = pst.executeQuery();
+            while (result.next()) {
+                combo.addItem(result.getString("año"));
+            }
+
+        } catch (Exception e) {
+
+        } finally {
+            if (conectar != null) {
+                try {
+                    conectar.close();
+                } catch (SQLException ex) {
+                }
+            }
+        }
+    }
+
+    public void CargarSupervisor(JComboBox combo) {
+        java.sql.Connection conectar = null;
+        String SSQL = "SELECT idSupervisor FROM supervisor ORDER BY idSupervisor ASC ";
+        try {
+            conectar = p.getConnection();
+            PreparedStatement pst = conectar.prepareCall(SSQL);
+            ResultSet result = pst.executeQuery();
+            while (result.next()) {
+                combo.addItem(result.getString("idSupervisor"));
+            }
+
+        } catch (Exception e) {
+
+        } finally {
+            if (conectar != null) {
+                try {
+                    conectar.close();
+                } catch (SQLException ex) {
+                }
+            }
+        }
+    }
+
+    public void CargareEmpresa(JComboBox combo) {
+        java.sql.Connection conectar = null;
+        String SSQL = "SELECT idEmpresa FROM empresa ORDER BY idEmpresa ASC ";
+        try {
+            conectar = p.getConnection();
+            PreparedStatement pst = conectar.prepareCall(SSQL);
+            ResultSet result = pst.executeQuery();
+            while (result.next()) {
+                combo.addItem(result.getString("idEmpresa"));
+            }
+
+        } catch (Exception e) {
+
+        } finally {
+            if (conectar != null) {
+                try {
+                    conectar.close();
+                } catch (SQLException ex) {
+                }
+            }
+        }
+    }
 }

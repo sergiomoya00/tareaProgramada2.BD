@@ -21,15 +21,15 @@ import javax.swing.table.DefaultTableModel;
 public class ConsultCalendary extends javax.swing.JFrame {
 
     Cargar p = new Cargar();
+
     /**
      * Creates new form ConsultCalendary
      */
     public ConsultCalendary() {
         initComponents();
-        Tables();
         p.CargarPeriodo(periodoCombo);
     }
-    
+
     void Tables() {
         try {
             DefaultTableModel modelo = new DefaultTableModel();
@@ -38,8 +38,10 @@ public class ConsultCalendary extends javax.swing.JFrame {
             ResultSet rs = null;
             Conexion conn = new Conexion();
             Connection con = conn.getConnection();
-
-            String sql = "SELECT detalle,valorPorcentual,fechaEntregable,idResponsable from calendarioevaluacion";
+            
+            //"SELECT b.detalle,b.valorPorcentual,b.fechaEntregable,b.idResponsable from practicante a,calendarioevaluacion b,periodopracticante c,periodopractica d where a.idPracticante=c.idPracticante  AND d.año=c.año AND c.numeroSemestre=d.numeroSemestre AND d.año="+periodoCombo.getSelectedItem().toString()+" AND d.numeroSemestre="+periodoCombo.getSelectedItem().toString();
+            String sql = "SELECT b.detalle,b.valorPorcentual,b.fechaEntregable,b.idResponsable from practicante a,calendarioevaluacion b,periodopracticante c,periodopractica d where a.idPracticante=c.idPracticante  AND d.año=c.año AND c.numeroSemestre=d.numeroSemestre AND d.año=" + periodoCombo.getSelectedItem().toString().substring(24) + " AND d.numeroSemestre=" + periodoCombo.getSelectedItem().toString().substring(20,21);
+            //"SELECT A.detalle,A.valorPorcentual,A.fechaEntregable,A.idResponsable from calendarioevaluacion A, periodopracticante B, practicante C, periodopractica D where B.idPracticante=C.idPracticante AND ";
 
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -76,6 +78,7 @@ public class ConsultCalendary extends javax.swing.JFrame {
         periodoCombo = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableCalendario = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,6 +112,13 @@ public class ConsultCalendary extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tableCalendario);
 
+        jButton2.setText("Buscar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -119,8 +129,11 @@ public class ConsultCalendary extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton1)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
-                            .addComponent(periodoCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(periodoCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(257, 257, 257)
                         .addComponent(jLabel1)))
@@ -133,11 +146,13 @@ public class ConsultCalendary extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(3, 3, 3)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(periodoCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(periodoCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
+                .addGap(23, 23, 23)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
@@ -148,6 +163,12 @@ public class ConsultCalendary extends javax.swing.JFrame {
         pa.setVisible(true);
         this.setVisible(false);          // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Tables();       
+        String lol = "Número de semestre: ";
+        System.out.print(periodoCombo.getSelectedItem().toString());
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,6 +207,7 @@ public class ConsultCalendary extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JComboBox<String> periodoCombo;

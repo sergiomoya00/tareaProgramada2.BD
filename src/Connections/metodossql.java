@@ -76,5 +76,121 @@ public class metodossql {
     }catch(Exception e){}
     return busqueda_usuario;
     }
+     public  String buscarContraseñaRegistradaEstudiante(String correo){
+    Conexion a=new Conexion();
+    String contraseña=null;
+    Connection co=null;
+    try{
+    co=a.getConnection();
+    String sentencia_buscar_usuario=("SELECT contraseña FROM usuariopracticante WHERE  correoElectronico= '"+correo+"'");
+    sentencia_preparada=co.prepareStatement(sentencia_buscar_usuario);
+    resultado=sentencia_preparada.executeQuery();
+    if(resultado.next()){
+    contraseña=resultado.getString("contraseña");
+    }
+    else{
+    contraseña="usuario no encontrado";
+    }
+    co.close();
+    }catch(Exception e){}
+    return contraseña;
+    }
+    public  String buscarCorreoRegistradoEstudiante(String correo){
+    Conexion a=new Conexion();
+    String busqueda_usuario=null;
+    Connection co=null;
+    try{
+    co=a.getConnection();
+    String sentencia_buscar_usuario=("SELECT correoElectronico FROM usuariopracticante WHERE  correoElectronico= '"+correo+"'");
+    sentencia_preparada=co.prepareStatement(sentencia_buscar_usuario);
+    resultado=sentencia_preparada.executeQuery();
+    if(resultado.next()){
+    busqueda_usuario="usuario encontrado";
+    }
+    else{
+    busqueda_usuario="usuario no encontrado";
+    }
+    co.close();
+    }catch(Exception e){}
+    return busqueda_usuario;
+    }
+    public  String buscarNombreEstudiante(String correo){
+    String busqueda_nombre=null;
+    Conexion p=new Conexion();
+    Connection co=null;
+    try{
+    co=p.getConnection();
+    String sentencia_buscar=("SELECT primerNombre,segundoNombre,primerApellido,segundoApellido FROM practicante where correoElectronico= '"+correo+"'");
+    sentencia_preparada=co.prepareStatement(sentencia_buscar);
+    resultado=sentencia_preparada.executeQuery();
+    if(resultado.next()){
+    String primerNombre=resultado.getString("primerNombre");
+        String   segundoNombre=resultado.getString("segundoNombre");
+        String   primerApellido=resultado.getString("primerApellido");
+        String   segundoApellido=resultado.getString("segundoApellido");
+        busqueda_nombre=(primerNombre+"  "+segundoNombre+"  "+primerApellido+"  "+segundoApellido);
+    }
+    co.close();
+    }catch(Exception e){}
+    return busqueda_nombre;
+    }
+     public  String buscarContraseñaRegistradaProfesor(String correo){
+    Conexion a=new Conexion();
+    String contraseña=null;
+    Connection co=null;
+    try{
+    co=a.getConnection();
+    String sentencia_buscar_usuario=("SELECT contraseña FROM usuarioprofesor WHERE  correoElectronico= '"+correo+"'");
+    sentencia_preparada=co.prepareStatement(sentencia_buscar_usuario);
+    resultado=sentencia_preparada.executeQuery();
+    if(resultado.next()){
+    contraseña=resultado.getString("contraseña");
+    }
+    else{
+    contraseña="usuario no encontrado";
+    }
+    co.close();
+    }catch(Exception e){}
+    return contraseña;
+    }
+    public  String buscarCorreoRegistradoProfesor(String correo){
+    Conexion a=new Conexion();
+    String busqueda_usuario=null;
+    Connection co=null;
+    try{
+    co=a.getConnection();
+    String sentencia_buscar_usuario=("SELECT correoElectronico FROM usuarioprofesor WHERE  correoElectronico= '"+correo+"'");
+    sentencia_preparada=co.prepareStatement(sentencia_buscar_usuario);
+    resultado=sentencia_preparada.executeQuery();
+    if(resultado.next()){
+    busqueda_usuario="usuario encontrado";
+    }
+    else{
+    busqueda_usuario="usuario no encontrado";
+    }
+    co.close();
+    }catch(Exception e){}
+    return busqueda_usuario;
+    }
+    public  String buscarNombreProfesor(String correo){
+    String busqueda_nombre=null;
+    Conexion p=new Conexion();
+    Connection co=null;
+    try{
+    co=p.getConnection();
+    String sentencia_buscar=("SELECT primerNombre,segundoNombre,primerApellido,segundoApellido FROM profesor where correoElectronico= '"+correo+"'");
+    sentencia_preparada=co.prepareStatement(sentencia_buscar);
+    resultado=sentencia_preparada.executeQuery();
+    if(resultado.next()){
+    String primerNombre=resultado.getString("primerNombre");
+        String   segundoNombre=resultado.getString("segundoNombre");
+        String   primerApellido=resultado.getString("primerApellido");
+        String   segundoApellido=resultado.getString("segundoApellido");
+        busqueda_nombre=(primerNombre+"  "+segundoNombre+"  "+primerApellido+"  "+segundoApellido);
+    }
+    co.close();
+    }catch(Exception e){}
+    return busqueda_nombre;
+    }
     
 }

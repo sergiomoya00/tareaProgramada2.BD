@@ -68,8 +68,8 @@ public class CreateMinuta extends javax.swing.JFrame {
 
         try {
             ps = cin.prepareCall(insertar);
-            ps.setInt(1, 005);
-            ps.setInt(2, 1);
+            ps.setInt(1, 1);
+            ps.setInt(2, 2);
             ps.setString(3, txt_tittle.getText());
             ps.setDate(4, java.sql.Date.valueOf(fechaInicio));
             ps.setDate(5, java.sql.Date.valueOf(fechaFinal));

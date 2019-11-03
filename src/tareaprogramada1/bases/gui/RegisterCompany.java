@@ -7,6 +7,7 @@ package tareaprogramada1.bases.gui;
 import Connections.Cargar;
 
 import Connections.Conexion;
+import Connections.intValidation;
 import java.sql.*;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -19,21 +20,27 @@ Conexion conexion=new Conexion();
  Connection cin= conexion.getConnection();
  PreparedStatement ps;
  Cargar c= new Cargar();
+ intValidation val=new intValidation();
     /**
      * Creates new form RegisterCompany
      */
     public RegisterCompany() {
         initComponents();
        c.Cargardistritos(combo);
+      
     }
 
    void Register(){
-   String insertar="insert into empresa (idEmpresa,telefono,idDistrito,razonSocial) values (?,?,?,?) ";
+   if(val.isNumeric(txtcedula.getText())==true && val.isNumeric(txttelefono.getText())){
+   String insertar="insert into empresa (idEmpresa,telefono,idDistrito,nombre) values (?,?,?,?) ";
+   String a=idDistrito(combo.getSelectedItem().toString());
+   int id=Integer.parseInt(a);
+   System.out.print(id);
    try{
    ps=cin.prepareCall(insertar);
    ps.setInt(1, Integer.parseInt(txtcedula.getText()));
    ps.setInt(2, Integer.parseInt(txttelefono.getText()));
-   ps.setInt(3, 10101);
+   ps.setInt(3, id);
    ps.setString(4, txtrazon.getText()); 
    int registro= ps.executeUpdate();
    if(registro>0){
@@ -46,6 +53,40 @@ Conexion conexion=new Conexion();
    }catch(Exception e){
    
    }
+   SupervisorFunctions papo = new SupervisorFunctions();
+        papo.setVisible(true);
+        this.setVisible(false);
+   }
+   else{
+   JOptionPane.showMessageDialog(null,"Datos ingresados incorrectos: Revisar los tipos");
+   
+   }
+   }
+   public String idDistrito(String id){
+    java.sql.Connection conectar=null;
+    String SSQL="SELECT idDistrito FROM distrito where distrito='"+id+"'";
+    String b="";
+    try{
+    
+    ps= cin.prepareCall(SSQL);
+    ResultSet result= ps.executeQuery();
+    while(result.next()){
+        b=result.getString("idDistrito");
+    }
+    
+    
+} catch(Exception e){
+    System.out.print("error");
+}finally{
+    if(conectar!=null){
+    try{
+    conectar.close();
+    }catch(SQLException ex){}
+    }
+    return b;
+    }  
+  
+  
    }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,7 +125,7 @@ Conexion conexion=new Conexion();
 
         jLabel7.setText("Distrito");
 
-        jLabel8.setText("Razon social");
+        jLabel8.setText("Nombre");
 
         jButton1.setText("Aceptar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -99,8 +140,6 @@ Conexion conexion=new Conexion();
                 jButton2ActionPerformed(evt);
             }
         });
-
-        combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -168,9 +207,7 @@ Conexion conexion=new Conexion();
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Register();
-        SupervisorFunctions papo = new SupervisorFunctions();
-        papo.setVisible(true);
-        this.setVisible(false);        // TODO add your handling code here:
+                // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

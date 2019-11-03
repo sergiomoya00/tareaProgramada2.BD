@@ -15,62 +15,60 @@ import javax.swing.JOptionPane;
  * @author jabre
  */
 public class Encargadoregister extends javax.swing.JFrame {
- Conexion conexion=new Conexion();
- Connection cin= conexion.getConnection();
- PreparedStatement ps;
+
+    Conexion conexion = new Conexion();
+    Connection cin = conexion.getConnection();
+    PreparedStatement ps;
+
     /**
      * Creates new form Encargadoregister
      */
     public Encargadoregister() {
         initComponents();
     }
-    
-  void Registerencargado(){
-   String insertar="insert into encargadopractica (idEncargado,primerNombre,segundoNombre,primerApellido,segundoApellido,telefono,correoElectronico) values (?,?,?,?,?,?,?) ";
-   try{
-   ps=cin.prepareCall(insertar);
-   ps.setString(1, txtcedula.getText());
-   ps.setString(2, txtprimernombre.getText());
-   ps.setString(3, txtsegundonombre.getText());
-   ps.setString(4, txtprimerapellido.getText());
-   ps.setString(5, txtsegundoapellido.getText());
-   ps.setString(6, txttelefono.getText());
-   ps.setString(7, txtcorreo.getText());
-   
-   int registro= ps.executeUpdate();
-   if(registro>0){
-   JOptionPane.showMessageDialog(this,"Usuario registrado con exito","Bien",JOptionPane.QUESTION_MESSAGE);
-   }
-   else{
-   JOptionPane.showMessageDialog(this,"Usuario no registrado con exito","atencion",JOptionPane.ERROR_MESSAGE);
-   }
-   
-   }catch(Exception e){
-   
-   }
-   }
-  void Registerusuario(){
-  String insertar="insert into usuarioencargado (correoElectronico,contraseña) values (?,?) ";
-   try{
-   ps=cin.prepareCall(insertar);
-   ps.setString(1, txtcorreo.getText());
-   ps.setString(2, txtcontra.getText());
-  
-   
-   int registro= ps.executeUpdate();
-   if(registro>0){
-   JOptionPane.showMessageDialog(this,"Usuario registrado con exito","Bien",JOptionPane.QUESTION_MESSAGE);
-   }
-   else{
-   JOptionPane.showMessageDialog(this,"Usuario no registrado con exito","atencion",JOptionPane.ERROR_MESSAGE);
-   }
-   
-   }catch(Exception e){
-   
-   }
-   }
-  
-  
+
+    void Registerencargado() {
+        String insertar = "insert into encargadopractica (idEncargado,primerNombre,segundoNombre,primerApellido,segundoApellido,telefono,correoElectronico) values (?,?,?,?,?,?,?) ";
+        try {
+            ps = cin.prepareCall(insertar);
+            ps.setString(1, txtcedula.getText());
+            ps.setString(2, txtprimernombre.getText());
+            ps.setString(3, txtsegundonombre.getText());
+            ps.setString(4, txtprimerapellido.getText());
+            ps.setString(5, txtsegundoapellido.getText());
+            ps.setString(6, txttelefono.getText());
+            ps.setString(7, txtcorreo.getText());
+
+            int registro = ps.executeUpdate();
+            if (registro > 0) {
+                JOptionPane.showMessageDialog(this, "Usuario registrado con exito", "Bien", JOptionPane.QUESTION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario no registrado con exito", "atencion", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    void Registerusuario() {
+        String insertar = "insert into usuarioencargado (correoElectronico,contraseña) values (?,?) ";
+        try {
+            ps = cin.prepareCall(insertar);
+            ps.setString(1, txtcorreo.getText());
+            ps.setString(2, txtcontra.getText());
+
+            int registro = ps.executeUpdate();
+            if (registro > 0) {
+                JOptionPane.showMessageDialog(this, "Usuario registrado con exito", "Bien", JOptionPane.QUESTION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario no registrado con exito", "atencion", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (Exception e) {
+
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -237,17 +235,17 @@ public class Encargadoregister extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    Registerencargado();
-    Registerusuario();
-    Encargadomenu p= new Encargadomenu();
-    p.setVisible(true);
-    this.setVisible(false);        // TODO add your handling code here:
+        Registerencargado();
+        Registerusuario();
+        Encargadomenu p = new Encargadomenu();
+        p.setVisible(true);
+        this.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    Encargadomenu p= new Encargadomenu();
-    p.setVisible(true);
-    this.setVisible(false);// TODO add your handling code here:
+        Encargadomenu p = new Encargadomenu();
+        p.setVisible(true);
+        this.setVisible(false);// TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
